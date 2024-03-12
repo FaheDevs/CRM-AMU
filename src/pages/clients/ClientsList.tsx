@@ -7,21 +7,20 @@ export interface IClient {
 
 interface ClientsListProps {
   people: IClient[]
-  onClick: (person: IClient) => void // Function to be called when an item is clicked
+  onClick: (person: IClient) => void
 }
 
 export function ClientsList({ people, onClick }: ClientsListProps) {
   return (
     <ul role='list' className='divide-y divide-gray-100'>
       {people.map((person) => (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
         <li
           key={person.email}
-          className='flex justify-between items-center gap-x-6 py-5 cursor-pointer hover:bg-gray-50'
+          className='md:flex justify-between items-center gap-x-6 py-5 cursor-pointer hover:bg-gray-100'
           onClick={() => onClick(person)}>
           <div className='flex items-center gap-x-4'>
             <img
-              className='h-12 w-12 flex-none rounded-full'
+              className='h-12 w-12 flex-none rounded-full ml-4'
               src={person.imageUrl}
               alt={person.name}
             />
@@ -34,7 +33,7 @@ export function ClientsList({ people, onClick }: ClientsListProps) {
               </p>
             </div>
           </div>
-          <div className='flex items-center'>
+          <div className='flex items-center mt-4 md:mt-0'>
             <p className='text-sm leading-6 text-gray-900'>{person.role}</p>
             <svg
               className='ml-4 h-5 w-5 text-gray-400'

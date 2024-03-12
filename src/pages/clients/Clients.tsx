@@ -49,9 +49,26 @@ export function Clients() {
     console.log(`You clicked on ${person.name}`)
   }
 
+  const handleCreateClient = () => {
+    // Implement your logic to handle client creation
+    console.log('Creating new client')
+  }
+
   return (
-    <div className='bg-white rounded-lg shadow-md overflow-hidden my-8 mx-4 p-6'>
-      <ClientsList people={people} onClick={handlePersonClick} />
-    </div>
+    <>
+      <div className='flex flex-col items-center mb-8 md:mb-4'>
+        <h1 className='text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-4'>
+          Liste des clients
+        </h1>
+        <button
+          className='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded'
+          onClick={handleCreateClient}>
+          Créer un client
+        </button>
+      </div>
+      <div className='bg-gray-200 rounded-lg shadow-md overflow-hidden my-4 md:my-8 mx-2 md:mx-8 p-4 md:p-6'>
+        <ClientsList people={people} onClick={handlePersonClick} />
+      </div>
+    </>
   )
 }
