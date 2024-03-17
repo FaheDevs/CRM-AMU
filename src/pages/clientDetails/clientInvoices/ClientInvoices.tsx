@@ -13,7 +13,7 @@ interface InvoicesTableProps {
 }
 export function ClientInvoices(props: InvoicesTableProps) {
   const { invoices, isLoadingInvoices, errorInvoices, isErrorInvoices } = props
-  console.log('invoices' + invoices)
+
   if (isLoadingInvoices) return <div>Loading...</div>
   if (isErrorInvoices)
     return (
@@ -26,15 +26,22 @@ export function ClientInvoices(props: InvoicesTableProps) {
     )
 
   if (!invoices) return <div>No invoices found</div>
+
+  const translateStatus = (status: string): string => {
+    switch (status) {
+      case 'Paid':
+        return 'Payée'
+      case 'Unpaid':
+        return 'Envoyée'
+      default:
+        return status
+    }
+  }
+
   return (
     <div className='mx-auto pb-8 w-full max-w-4xl overflow-x-auto'>
-      {' '}
-      {/* Adjusted width here */}
       <table className='min-w-full divide-y divide-gray-200'>
-        {' '}
-        {/* Removed some padding for full width */}
-        {/* TABLE HEAD */}
-        <thead className='min-w-full bg-gray-100 text-left text-gray-700'>
+        <thead className='bg-gray-100 text-left text-gray-700'>
           <tr>
             <th
               className='py-3 px-4 text-sm font-medium uppercase tracking-wide'
@@ -56,14 +63,8 @@ export function ClientInvoices(props: InvoicesTableProps) {
               scope='col'>
               Due Date
             </th>
-            <th
-              className='py-3 px-4 text-center text-sm font-medium uppercase tracking-wide'
-              scope='col'>
-              Actions
-            </th>
           </tr>
         </thead>
-        {/* TABLE BODY */}
         <tbody>
           {invoices.map((invoice, index) => (
             <tr
@@ -75,25 +76,13 @@ export function ClientInvoices(props: InvoicesTableProps) {
                 {invoice.amount} €
               </td>
               <td className='py-3 px-4 text-base text-gray-500 font-medium'>
-                {invoice.status}
+                {translateStatus(invoice.status)}
               </td>
               <td className='py-3 px-4 text-base text-gray-500 font-medium'>
                 {invoice.issued_date}
               </td>
               <td className='py-3 px-4 text-base text-gray-500 font-medium'>
                 {invoice.due_date}
-              </td>
-              <td className='py-3 px-4 flex justify-around items-center space-x-6 text-base text-gray-700 font-medium'>
-                <button
-                  type='button'
-                  className='text-sm text-gray-700 font-semibold hover:underline hover:text-black'>
-                  Edit
-                </button>
-                <button
-                  type='button'
-                  className='text-sm text-red-500 font-semibold hover:text-red-600'>
-                  Delete
-                </button>
               </td>
             </tr>
           ))}

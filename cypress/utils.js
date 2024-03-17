@@ -1,10 +1,10 @@
 // L'URL sur laquelle votre application web est visitable (à changer si nécessaire)
-export const BASE_URL = "http://localhost:4200/";
+export const BASE_URL = 'http://localhost:5173/'
 // L'URL de l'API Supabase à mettre à jour absolument
-export const API_URL = "https://gdzprwugmxdxnpgztbwt.supabase.co/rest/v1";
+export const API_URL = 'https://rspsrfygtvevqgthkktz.supabase.co/rest/v1'
 // La clé d'API de votre compte Supabase à mettre à jour absolument
 export const API_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MDUyMjE4MCwiZXhwIjoxOTU2MDk4MTgwfQ.bs4zHK_Hor5Z1ojmZ9MBF_jTvZpiye_DpiUPZcq209A";
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzcHNyZnlndHZldnFndGhra3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA1NDM2ODUsImV4cCI6MjAyNjExOTY4NX0.qBJ2heWcV29Axzr1eKHNJPWzTlgQnfotRn952Z0WaoY'
 
 /**
  * Petite fonction utilitaire qui permet de supprimer tout ce qui se trouve dans les tables customers et invoices
@@ -12,18 +12,18 @@ export const API_KEY =
  */
 export const resetDatabase = () => {
   cy.request({
-    method: "DELETE",
-    url: API_URL + "/invoices?id=gt.0",
+    method: 'DELETE',
+    url: API_URL + '/invoices?id=gt.0',
     headers: {
-      apiKey: API_KEY,
-    },
-  });
+      apiKey: API_KEY
+    }
+  })
 
   cy.request({
-    method: "DELETE",
-    url: API_URL + "/customers?id=gt.0",
+    method: 'DELETE',
+    url: API_URL + '/customers?id=gt.0',
     headers: {
-      apiKey: API_KEY,
-    },
-  });
-};
+      apiKey: API_KEY
+    }
+  })
+}

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import {
   fetchClientById,
@@ -10,7 +10,7 @@ import { ClientInvoices } from './clientInvoices/ClientInvoices'
 
 export interface Invoice {
   amount: number
-  status: 'Paid' | 'Pending' | 'Unpaid'
+  status: string
   issued_date: string
   due_date: string
 }
@@ -53,9 +53,10 @@ export function ClientDetails() {
   if (!clientDetails) return <div>No client found</div>
 
   return (
-    <div className='max-w-4xl mx-auto bg-white p-6 border border-gray-300 rounded-lg shadow-md'>
+    <div className='max-w-4xl mx-auto bg-white p-6 border border-gray-300 rounded-lg shadow-md mt-8'>
       <h2 className='text-lg font-semibold'>
-        Fiche de {clientDetails?.name} ({clientDetails?.email})
+        <span>Fiche de {clientDetails?.name}</span>
+        <span className='block'>({clientDetails?.email})</span>
       </h2>
       <button
         className='mt-4 text-blue-600 hover:text-blue-800'
@@ -69,11 +70,13 @@ export function ClientDetails() {
           isErrorInvoices={isErrorInvoices}
           isLoadingInvoices={isLoadingInvoices}
         />
-        <button
-          className='mt-6 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-700'
-          onClick={() => console.log('Créer une facture')}>
-          Créer une facture
-        </button>
+        <Link to={`/${clientDetails.id}/invoices/add`}>
+          <button
+            className='mt-6 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-700'
+            onClick={() => console.log('Créer une facture')}>
+            Créer une facture
+          </button>
+        </Link>
       </div>
     </div>
   )

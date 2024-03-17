@@ -9,16 +9,16 @@ describe('ClientsList', () => {
   const mockOnClick = jest.fn()
   const mockPeople = [
     {
+      id: 1,
       name: 'John Doe',
       email: 'john.doe@example.com',
-      role: 'Software Engineer',
-      image_url: 'https://example.com/john.jpg'
+      role: 'Software Engineer'
     },
     {
+      id: 2,
       name: 'Jane Smith',
       email: 'jane.smith@example.com',
-      role: 'Project Manager',
-      image_url: 'https://example.com/jane.jpg'
+      role: 'Project Manager'
     }
   ]
 

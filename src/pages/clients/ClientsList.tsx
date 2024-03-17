@@ -5,15 +5,13 @@ export interface IClient {
   name: string
   email: string
   role: string
-  image_url: string
 }
 
 interface ClientsListProps {
   people: IClient[]
-  onClick: (person: IClient) => void
 }
 
-export function ClientsList({ people, onClick }: ClientsListProps) {
+export function ClientsList({ people }: ClientsListProps) {
   const navigate = useNavigate()
   return (
     <>
@@ -23,15 +21,9 @@ export function ClientsList({ people, onClick }: ClientsListProps) {
             key={person.id}
             className='md:flex justify-between items-center gap-x-6 py-5 cursor-pointer hover:bg-gray-100'
             onClick={() => {
-              onClick(person)
               navigate(`/${person.id}`)
             }}>
             <div className='flex items-center gap-x-4'>
-              <img
-                className='h-12 w-12 flex-none rounded-full ml-4'
-                src={person.image_url}
-                alt={person.name}
-              />
               <div className='flex flex-col min-w-0 flex-auto'>
                 <p className='text-sm font-semibold leading-6 text-gray-900'>
                   {person.name}
