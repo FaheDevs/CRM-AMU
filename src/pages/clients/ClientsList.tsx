@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom'
+
 export interface IClient {
+  id: number
   name: string
   email: string
   role: string
@@ -11,14 +14,18 @@ interface ClientsListProps {
 }
 
 export function ClientsList({ people, onClick }: ClientsListProps) {
+  const navigate = useNavigate()
   return (
     <>
       <ul className='divide-y divide-gray-100'>
         {people.map((person) => (
           <li
-            key={person.email}
+            key={person.id}
             className='md:flex justify-between items-center gap-x-6 py-5 cursor-pointer hover:bg-gray-100'
-            onClick={() => onClick(person)}>
+            onClick={() => {
+              onClick(person)
+              navigate(`/${person.id}`)
+            }}>
             <div className='flex items-center gap-x-4'>
               <img
                 className='h-12 w-12 flex-none rounded-full ml-4'

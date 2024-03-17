@@ -11,7 +11,6 @@ export const fetchClients = async (
   page: number,
   limit = 10
 ): Promise<PaginationResult<IClient>> => {
-  // Calculate the range based on the page and limit
   const startRange = page * limit
   const endRange = startRange + limit - 1
 
@@ -31,9 +30,8 @@ export const fetchClients = async (
     throw new Error('Network response was not ok')
   }
 
-  // Supabase includes total count in the "content-range" header
   const contentRange = response.headers.get('content-range')
-  const total = contentRange ? parseInt(contentRange.split('/').pop()!, 10) : 0 // Extract total count from content-range
+  const total = contentRange ? parseInt(contentRange.split('/').pop()!, 10) : 0
 
   return {
     data: await response.json(),
