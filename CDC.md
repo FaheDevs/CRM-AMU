@@ -37,3 +37,34 @@ L'URL `/:id/invoices/create` (avec :id étant l'identifiant d'un client) doit pe
 Lorsque le formulaire est soumis, l'application redirige vers la page de détails du client (`/:id`) et on doit constater que la facture nouvellement créée est bien présente sur la fiche du client.
 
 ![Création d'une facture](docs/mock-invoice-creation.PNG)
+
+
+Clients
+List all clients
+
+Method: GET
+Route: /clients
+Action: Retrieves a list of all clients.
+View details of a specific client
+
+Method: GET
+Route: /clients/:id
+Action: Retrieves details for a specific client by ID.
+Create a new client
+
+Method: POST
+Route: /clients
+Action: Adds a new client to the database.
+
+
+Invoices
+List all invoices for a specific client
+
+Method: GET
+Route: /clients/:id/invoices
+Action: Retrieves all invoices associated with a specific client.
+Create a new invoice for a specific client
+
+Method: POST
+Route: /clients/:id/invoices
+Action: Adds a new invoice associated with a specific client.

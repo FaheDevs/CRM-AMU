@@ -1,58 +1,28 @@
+import { useQuery } from '@tanstack/react-query'
+import React, { useState } from 'react'
+
+import { fetchClients } from '../../api/clients/api'
 import { ClientsList, IClient } from './ClientsList'
 
-const people = [
-  {
-    name: 'Leslie Alexander',
-    email: 'leslie.alexander@example.com',
-    role: 'Co-Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael.foster@example.com',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  },
-  {
-    name: 'Dries Vincent',
-    email: 'dries.vincent@example.com',
-    role: 'Business Relations',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  },
-  {
-    name: 'Lindsay Walton',
-    email: 'lindsay.walton@example.com',
-    role: 'Front-end Developer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  },
-  {
-    name: 'Courtney Henry',
-    email: 'courtney.henry@example.com',
-    role: 'Designer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  },
-  {
-    name: 'Tom Cook',
-    email: 'tom.cook@example.com',
-    role: 'Director of Product',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  }
-]
 export function Clients() {
+  const [page, setPage] = useState(0)
+  const limit = 10
+
+  const { isLoading, isError, error, data } = useQuery({
+    queryKey: ['clients', page],
+    queryFn: () => fetchClients(page, limit)
+  })
+
   const handlePersonClick = (person: IClient) => {
     console.log(`You clicked on ${person.name}`)
   }
 
   const handleCreateClient = () => {
-    // Implement your logic to handle client creation
     console.log('Creating new client')
   }
+
+  // Calculating total number of pages
+  const totalPages = data ? Math.ceil(data.total / limit) : 0
 
   return (
     <>
@@ -67,7 +37,48 @@ export function Clients() {
         </button>
       </div>
       <div className='bg-gray-200 rounded-lg shadow-md overflow-hidden my-4 md:my-8 mx-2 md:mx-8 p-4 md:p-6'>
-        <ClientsList people={people} onClick={handlePersonClick} />
+        {isLoading ? (
+          <div>Loading clients...</div>
+        ) : isError ? (
+          <div>
+            Error:{' '}
+            {error instanceof Error ? error.message : 'An error occurred'}
+          </div>
+        ) : (
+          <ClientsList people={data?.data || []} onClick={handlePersonClick} />
+        )}
+        <div className='mt-6 flex justify-between items-center'>
+          <button
+            onClick={() => setPage((old) => Math.max(old - 1, 0))}
+            disabled={page === 0}
+            className='bg-blue-500 text-white disabled:opacity-50 px-4 py-2 rounded hover:bg-blue-700 transition-colors'>
+            Previous
+          </button>
+          <div className='flex'>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => setPage(index)}
+                className={`mx-1 px-4 py-2 ${
+                  page === index
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-blue-500'
+                } rounded hover:bg-blue-500 hover:text-white transition-colors`}>
+                {index + 1}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => {
+              if (!data?.total || data.total > (page + 1) * limit) {
+                setPage((old) => old + 1)
+              }
+            }}
+            disabled={page >= totalPages - 1}
+            className='bg-blue-500 text-white disabled:opacity-50 px-4 py-2 rounded hover:bg-blue-700 transition-colors'>
+            Next
+          </button>
+        </div>
       </div>
     </>
   )

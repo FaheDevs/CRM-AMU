@@ -12,13 +12,13 @@ describe('ClientsList', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       role: 'Software Engineer',
-      imageUrl: 'https://example.com/john.jpg'
+      image_url: 'https://example.com/john.jpg'
     },
     {
       name: 'Jane Smith',
       email: 'jane.smith@example.com',
       role: 'Project Manager',
-      imageUrl: 'https://example.com/jane.jpg'
+      image_url: 'https://example.com/jane.jpg'
     }
   ]
 
