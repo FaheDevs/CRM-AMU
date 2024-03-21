@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { VITE_API_KEY } from '../../api/clientDetails/api'
 
 export default function CreateClient() {
   const [name, setName] = useState('')
@@ -8,7 +10,7 @@ export default function CreateClient() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault()
     setLoading(true)
     setError('')
@@ -20,8 +22,8 @@ export default function CreateClient() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            apikey: `${import.meta.env.VITE_API_KEY}`,
-            Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            apikey: VITE_API_KEY,
+            Authorization: `Bearer ${VITE_API_KEY}`,
             Prefer: 'return=minimal'
           },
           body: JSON.stringify({ name: name, email: email })
@@ -45,7 +47,7 @@ export default function CreateClient() {
   }
 
   return (
-    <div className='max-w-md mx-auto bg-white p-6 border border-gray-300 rounded-lg shadow-md mt-8'>
+    <div className='max-w-xl mx-auto bg-white p-8 border-2 border-[#bae6fd] rounded-lg shadow-lg mt-12'>
       <h2 className='text-lg font-semibold mb-4'>Créer un client</h2>
       {error && <div className='mb-4 text-red-600'>{error}</div>}
       <form onSubmit={handleSubmit}>
@@ -92,6 +94,11 @@ export default function CreateClient() {
           </button>
         </div>
       </form>
+      <Link to='/'>
+        <button className='mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'>
+          Retour aux clients
+        </button>
+      </Link>
     </div>
   )
 }

@@ -3,6 +3,9 @@
 import { Invoice } from '../../pages/clientDetails/ClientDetails'
 import { IClient } from '../../pages/clients/ClientsList'
 
+export const VITE_API_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzcHNyZnlndHZldnFndGhra3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA1NDM2ODUsImV4cCI6MjAyNjExOTY4NX0.qBJ2heWcV29Axzr1eKHNJPWzTlgQnfotRn952Z0WaoY'
+
 export const fetchClientById = async (
   clientId: string | undefined
 ): Promise<IClient> => {
@@ -11,12 +14,12 @@ export const fetchClientById = async (
   }
 
   const response = await fetch(
-    `https://rspsrfygtvevqgthkktz.supabase.co/rest/v1/clients?id=eq.${clientId}&select=*`, // Corrected URL
+    `https://rspsrfygtvevqgthkktz.supabase.co/rest/v1/clients?id=eq.${clientId}&select=*`,
     {
       headers: {
         'Content-Type': 'application/json',
-        apikey: `${import.meta.env.VITE_API_KEY}`, // Replace with your Supabase API key
-        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` // Replace with your Supabase anon/public key
+        apikey: VITE_API_KEY,
+        Authorization: `Bearer ${VITE_API_KEY}`
       }
     }
   )
@@ -41,8 +44,8 @@ export const fetchInvoicesByClientId = async (
     {
       headers: {
         'Content-Type': 'application/json',
-        apikey: `${import.meta.env.VITE_API_KEY}`,
-        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
+        apikey: VITE_API_KEY,
+        Authorization: `Bearer ${VITE_API_KEY}`
       }
     }
   )

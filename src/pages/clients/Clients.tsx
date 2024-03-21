@@ -13,27 +13,40 @@ export function Clients() {
 
   return (
     <>
-      <div className='flex flex-col items-center mb-8 md:mb-4'>
-        <h1 className='text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-4'>
-          Liste des clients
-        </h1>
-        <Link to='/create'>
-          <button className='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded'>
-            Créer un client
-          </button>
-        </Link>
-      </div>
-      <div className='bg-gray-200 rounded-lg shadow-md overflow-hidden my-4 md:my-8 mx-2 md:mx-8 p-4 md:p-6'>
-        {isLoading ? (
-          <div>Loading clients...</div>
-        ) : isError ? (
-          <div>
-            Error:{' '}
-            {error instanceof Error ? error.message : 'An error occurred'}
+      <div className='fixed top-0 left-0 w-full bg-[#67e8f9] bg-opacity-60 z-10 backdrop-blur-sm'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='flex justify-between items-center py-4 md:justify-start md:space-x-10'>
+            <h1
+              className='text-2xl lg:text-3xl font-bold'
+              style={{ color: '#155e75' }}>
+              Liste des clients
+            </h1>
+            <Link to='/create'>
+              <button className='bg-[#075985] hover:bg-[#0c96d6] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out'>
+                Créer un client
+              </button>
+            </Link>
           </div>
-        ) : (
-          <ClientsList people={data || []} />
-        )}
+        </div>
+      </div>
+
+      <div className='pt-20'>
+        <div
+          className='bg-white rounded-lg shadow-xl overflow-hidden my-4 md:my-8 mx-2 md:mx-8 p-4 md:p-8'
+          style={{ borderColor: '#dbeafe' }}>
+          {isLoading ? (
+            <div className='text-center font-medium text-lg'>
+              Loading clients...
+            </div>
+          ) : isError ? (
+            <div className='text-red-500 text-center font-medium text-lg'>
+              Error:{' '}
+              {error instanceof Error ? error.message : 'An error occurred'}
+            </div>
+          ) : (
+            <ClientsList people={data || []} />
+          )}
+        </div>
       </div>
     </>
   )

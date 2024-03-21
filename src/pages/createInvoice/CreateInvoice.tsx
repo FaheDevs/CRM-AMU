@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { VITE_API_KEY } from '../../api/clientDetails/api'
+
 export default function CreateInvoice() {
   const { clientId } = useParams()
   const [amount, setAmount] = useState('')
@@ -19,8 +21,8 @@ export default function CreateInvoice() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            apikey: `${import.meta.env.VITE_API_KEY}`,
-            Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            apikey: VITE_API_KEY,
+            Authorization: `Bearer ${VITE_API_KEY}`,
             Prefer: 'return=minimal'
           },
           body: JSON.stringify({

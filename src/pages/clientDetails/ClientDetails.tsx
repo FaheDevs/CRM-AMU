@@ -58,11 +58,11 @@ export function ClientDetails() {
         <span>Fiche de {clientDetails?.name}</span>
         <span className='block'>({clientDetails?.email})</span>
       </h2>
-      <button
-        className='mt-4 text-blue-600 hover:text-blue-800'
-        onClick={() => navigate(-1)}>
-        Retour aux clients
-      </button>
+      <Link to='/'>
+        <button className='mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'>
+          Retour aux clients
+        </button>
+      </Link>
       <div className='mt-6 w-full'>
         <ClientInvoices
           invoices={clientInvoices}
